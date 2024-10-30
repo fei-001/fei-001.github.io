@@ -1,0 +1,218 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>openstack部署脚本 | 路明非の主页</title><meta name="author" content="路明非"><meta name="copyright" content="路明非"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="1.修改主机名 controller+compute12hostnamectl set-hostname controller &amp;&amp; bashhostnamectl set-hostname compute &amp;&amp; bash 2.配置主机映射 controller+compute123echo &quot;192.168.200.10 controller&quot;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="openstack部署脚本">
+<meta property="og:url" content="http://example.com/2024/10/23/openstack%E9%83%A8%E7%BD%B2/index.html">
+<meta property="og:site_name" content="路明非の主页">
+<meta property="og:description" content="1.修改主机名 controller+compute12hostnamectl set-hostname controller &amp;&amp; bashhostnamectl set-hostname compute &amp;&amp; bash 2.配置主机映射 controller+compute123echo &quot;192.168.200.10 controller&quot;">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.gitmirror.com/fei-001/picture/main/OIP2.jpg">
+<meta property="article:published_time" content="2024-10-23T08:03:17.000Z">
+<meta property="article:modified_time" content="2024-10-30T08:16:36.331Z">
+<meta property="article:author" content="路明非">
+<meta property="article:tag" content="脚本">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.gitmirror.com/fei-001/picture/main/OIP2.jpg"><link rel="shortcut icon" href="https://raw.gitmirror.com//fei-001/picture/main/ead.jpg"><link rel="canonical" href="http://example.com/2024/10/23/openstack%E9%83%A8%E7%BD%B2/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.1.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        if (name && globalFn[key][name]) return
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'openstack部署脚本',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2024-10-30 16:16:36'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg" style="background-image: url(url(https://raw.gitmirror.com/fei-001/picture/main/OIP.jpg));"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://raw.gitmirror.com//fei-001/picture/main/head.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://raw.gitmirror.com/fei-001/picture/main/OIP2.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">路明非の主页</span></a><a class="nav-page-title" href="/"><span class="site-name">openstack部署脚本</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">openstack部署脚本</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-10-23T08:03:17.000Z" title="Created 2024-10-23 16:03:17">2024-10-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-10-30T08:16:36.331Z" title="Updated 2024-10-30 16:16:36">2024-10-30</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>1.修改主机名</p>
+<figure class="highlight shell"><figcaption><span>controller+compute</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hostnamectl set-hostname controller &amp;&amp; bash</span><br><span class="line">hostnamectl set-hostname compute &amp;&amp; bash</span><br></pre></td></tr></table></figure>
+<p>2.配置主机映射</p>
+<figure class="highlight shell"><figcaption><span>controller+compute</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;192.168.200.10 controller&quot; &gt;&gt; /etc/hosts</span><br><span class="line">echo &quot;192.168.200.20 compute&quot; &gt;&gt; /etc/hosts</span><br><span class="line">scp /etc/hosts 192.168.200.20:/etc/hosts </span><br></pre></td></tr></table></figure>
+<p>3.关闭防火墙</p>
+<figure class="highlight shell"><figcaption><span>controller+compute</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld</span><br><span class="line">systemctl disable firewalld</span><br><span class="line">setenforce 0                                              #临时设置selinux模式为宽容模式</span><br><span class="line">getenforce                                                #查看selinux模式，应为Permissive</span><br><span class="line">sed -i &quot;s/SELINUX=.*/SELINUS=disabled/&quot; /etc/selinux/config #永久设置selinux模式为禁止模式</span><br></pre></td></tr></table></figure>
+<p>4.配置免密钥</p>
+<figure class="highlight shell"><figcaption><span>controller+compute</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen                           #获取密钥 设置密钥按回车就行</span><br><span class="line">ssh-copy-id compute                  </span><br><span class="line">ssh &quot;compute&quot; #测试一下是否成功</span><br></pre></td></tr></table></figure>
+<p>5.配置yum源</p>
+<figure class="highlight shell"><figcaption><span>controller</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rm -rf /etc/yum.repos.d/* #清除原有的yum源</span><br><span class="line">vi /etc/yum.repos.d/local.repo #配置yum源     #compute不用这样远程复制就行</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>发送yum源配置到compute节点<br>scp &#x2F;etc&#x2F;yum.repos.d&#x2F;local.repo compute: &#x2F;etc&#x2F;yum.repos.d&#x2F;local.repo<br>并做以下修改</p>
+</blockquote>
+<blockquote>
+<p>[centos]<br>name&#x3D;centos<br>baseurl&#x3D;<a href="ftp://controller/centos">ftp://controller/centos</a><br>gpgcheck&#x3D;0<br>enabled&#x3D;1</p>
+</blockquote>
+<blockquote>
+<p>[iaas]<br>name&#x3D;iaas<br>baseurl&#x3D;<a href="ftp://controller/iaas/iaas-repo">ftp://controller/iaas/iaas-repo</a><br>gpgcheck&#x3D;0<br>enabled&#x3D;1</p>
+</blockquote>
+<p>6.建立本地仓库 </p>
+<figure class="highlight shell"><figcaption><span>controller</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mkdir /opt/&#123;centos,iaas&#125;</span><br><span class="line">mount Centos-7-x86_64-DVD-2009.iso /mnt/ #挂载镜像到文件夹</span><br><span class="line">cp -rf /mnt/* /opt/centos/</span><br><span class="line">umount /opt/   #取消挂载</span><br><span class="line">mount chinaskills_cloud_iaas_v2.0.3.iso /mnt/</span><br><span class="line">cp -rf /mnt/* /opt/iaas/</span><br></pre></td></tr></table></figure>
+<p>7.验证yum源</p>
+<figure class="highlight shell"><figcaption><span>controller</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum clean all &amp;&amp; yum repolist</span><br></pre></td></tr></table></figure>
+<p>8.安装ftp服务</p>
+<figure class="highlight shell"><figcaption><span>controller</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">yum install -y vsftpd</span><br><span class="line">echo &quot;anon_root=/opt/&quot; &gt;&gt; /etc/vsftpd/vsftpd.conf</span><br><span class="line">systemctl start vsftpd</span><br><span class="line">systemctl enable vsftpd</span><br></pre></td></tr></table></figure>
+<p>9.验证yum源</p>
+<figure class="highlight shell"><figcaption><span>compute</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum clean all &amp;&amp; yum repolist</span><br></pre></td></tr></table></figure>
+<p>10.提前分区磁盘</p>
+<figure class="highlight shell"><figcaption><span>compute</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">lsblk #查看盘符</span><br><span class="line">fdisk /dev/sdb</span><br><span class="line">n</span><br><span class="line">p</span><br><span class="line">回车</span><br><span class="line">回车</span><br><span class="line">+10G</span><br><span class="line">n</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>再重复三次 最后w退出</p>
+</blockquote>
+<p>11.安装openstack-iaas软件包和vim</p>
+<figure class="highlight shell"><figcaption><span>controller</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y openstack-iaas vim</span><br></pre></td></tr></table></figure>
+<p>12.修改初始脚本</p>
+<figure class="highlight shell"><figcaption><span>controller</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/openstack/openrc.sh</span><br></pre></td></tr></table></figure>
+<ul>
+<li>这一步要细心</li>
+<li>先：999 退到最后一行 </li>
+<li>复制（%s&#x2F;^.{1}&#x2F;&#x2F;）粘贴这个</li>
+<li>：%s&#x2F;PASS&#x3D;&#x2F;PASS&#x3D;000000</li>
+<li>然后：3 到第一行</li>
+<li>最后自己看着改</li>
+</ul>
+<blockquote>
+<ul>
+<li>把改好的发送到compute</li>
+</ul>
+</blockquote>
+<figure class="highlight shell"><figcaption><span>controller</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp /etc/openstack/openrc.sh /compute: /etc/openstack/openrc.sh</span><br></pre></td></tr></table></figure>
+<p>13.刷脚本</p>
+<figure class="highlight shell"><figcaption><span>controller+compute</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iaas-pre-host.sh</span><br></pre></td></tr></table></figure>
+<p>14.安装各个服务</p>
+<ul>
+<li>controller(共7个)</li>
+<li>mysql</li>
+<li>2.keystone</li>
+<li>3.glance</li>
+<li>4.placement</li>
+<li>5.nova-controller</li>
+<li>6.neutron-controller</li>
+<li>7.dashboa</li>
+</ul>
+<blockquote>
+<p>compute不能闲着可以先筛选即将安装的服务(共两个)需要等controller安装完成方可安装</p>
+</blockquote>
+<figure class="highlight shell"><figcaption><span>compute</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">find / -name iaas*</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">cat ----------- | grep yum</span><br></pre></td></tr></table></figure></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://fei-001.github.io/">路明非</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://example.com/2024/10/23/openstack%E9%83%A8%E7%BD%B2/">http://example.com/2024/10/23/openstack%E9%83%A8%E7%BD%B2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%84%9A%E6%9C%AC/">脚本</a></div><div class="post-share"><div class="social-share" data-image="https://raw.gitmirror.com/fei-001/picture/main/OIP2.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>Sponsor</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://raw.gitmirror.com/fei-001/picture/main/wxzf.jpg" target="_blank"><img class="post-qr-code-img" src="https://raw.gitmirror.com/fei-001/picture/main/wxzf.jpg" alt="微信支付"/></a><div class="post-qr-code-desc">微信支付</div></li><li class="reward-item"><a href="https://raw.gitmirror.com/fei-001/picture/main/zfb.jpg" target="_blank"><img class="post-qr-code-img" src="https://raw.gitmirror.com/fei-001/picture/main/zfb.jpg" alt="支付宝支付"/></a><div class="post-qr-code-desc">支付宝支付</div></li></ul></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2024/10/23/docker%E5%AE%89%E8%A3%85/" title="docker安装"><img class="cover" src="https://raw.gitmirror.com/fei-001/picture/main/OIP.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">Previous</div><div class="info-item-2">docker安装</div></div><div class="info-2"><div class="info-item-1">首先给centos联网：😱 检验网络连接成功的方法： 12341..dig www.baidu.com2.curl www.baidu.com3.nslookup www.baidu.com4.dig www.baidu.com docker安装：https://cloud.tencent.com/document/product/213/46000#C_XgAwZpjht292j2EOU2t 总结 5条命令如下所示：  1.添加Docker软件源 12yum-config-manager --add-repo=https://mirrors.cloud.tencent.com/docker-ce/linux/centos/docker-ce.repo 2.查看添加的Docker软件源 1yum list docker-ce 3.安装Docker 1yum install -y docker-ce 4.运行Docker 1systemctl start docker 5.检查安装结果 1docker info 如下图表示安装成功。  安装失败：Cannot find a...</div></div></div></a><a class="pagination-related" href="/2024/10/23/opens%E9%83%A8%E7%BD%B2%E8%84%9A%E6%9C%AC/" title="openstack部署脚本"><img class="cover" src="https://raw.gitmirror.com/fei-001/picture/main/OIP2.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">openstack部署脚本</div></div><div class="info-2"><div class="info-item-1">compute脚本112345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485#!/bin/bash# 节点说明# controller 192.168.200.10 且root目录下有CentOS-7-x86_64-DVD-1804.iso、chinaskills_cloud_iaas_v2.0.3.iso# controller 192.168.200.20hostnamectl set-hostname compute# 确保 controller 和 compute 都保持开启echo &#x27;192.168.200.10 controller&#x27; &gt;&gt; /etc/hostsecho &#x27;192.168.200.20 compute&#x27; &gt;&gt;...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2024/10/23/opens%E9%83%A8%E7%BD%B2%E8%84%9A%E6%9C%AC/" title="openstack部署脚本"><img class="cover" src="https://raw.gitmirror.com/fei-001/picture/main/OIP2.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-23</div><div class="info-item-2">openstack部署脚本</div></div><div class="info-2"><div class="info-item-1">compute脚本112345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485#!/bin/bash# 节点说明# controller 192.168.200.10 且root目录下有CentOS-7-x86_64-DVD-1804.iso、chinaskills_cloud_iaas_v2.0.3.iso# controller 192.168.200.20hostnamectl set-hostname compute# 确保 controller 和 compute 都保持开启echo &#x27;192.168.200.10 controller&#x27; &gt;&gt; /etc/hostsecho &#x27;192.168.200.20 compute&#x27; &gt;&gt;...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://raw.gitmirror.com//fei-001/picture/main/head.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">路明非</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ByteQuestor"><i class="fab fa-github"></i><span>Github</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">一定是平时练习总是 差不多 差不多 关键时刻总是差一点</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/10/23/docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" title="docker常用命令"><img src="https://raw.gitmirror.com/ByteQuestor/picture/main/docker/docker.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="docker常用命令"/></a><div class="content"><a class="title" href="/2024/10/23/docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" title="docker常用命令">docker常用命令</a><time datetime="2024-10-23T08:03:17.000Z" title="Created 2024-10-23 16:03:17">2024-10-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/10/23/docker%E5%AE%89%E8%A3%85/" title="docker安装"><img src="https://raw.gitmirror.com/fei-001/picture/main/OIP.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="docker安装"/></a><div class="content"><a class="title" href="/2024/10/23/docker%E5%AE%89%E8%A3%85/" title="docker安装">docker安装</a><time datetime="2024-10-23T08:03:17.000Z" title="Created 2024-10-23 16:03:17">2024-10-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/10/23/openstack%E9%83%A8%E7%BD%B2/" title="openstack部署脚本"><img src="https://raw.gitmirror.com/fei-001/picture/main/OIP2.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="openstack部署脚本"/></a><div class="content"><a class="title" href="/2024/10/23/openstack%E9%83%A8%E7%BD%B2/" title="openstack部署脚本">openstack部署脚本</a><time datetime="2024-10-23T08:03:17.000Z" title="Created 2024-10-23 16:03:17">2024-10-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/10/23/opens%E9%83%A8%E7%BD%B2%E8%84%9A%E6%9C%AC/" title="openstack部署脚本"><img src="https://raw.gitmirror.com/fei-001/picture/main/OIP2.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="openstack部署脚本"/></a><div class="content"><a class="title" href="/2024/10/23/opens%E9%83%A8%E7%BD%B2%E8%84%9A%E6%9C%AC/" title="openstack部署脚本">openstack部署脚本</a><time datetime="2024-10-23T08:03:17.000Z" title="Created 2024-10-23 16:03:17">2024-10-23</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By 路明非</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.1.0"></script><script src="/js/main.js?v=5.1.0"></script><div class="js-pjax"></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/dist/click-show-text.min.js" data-mobile="false" data-text="I,LOVE,YOU" data-fontsize="25px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
